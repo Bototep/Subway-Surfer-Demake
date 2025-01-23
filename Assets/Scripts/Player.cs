@@ -12,10 +12,13 @@ public class Player : MonoBehaviour
 
 	private float originalHeight; 
 	private Vector3 originalCenter; 
-	public float crouchHeight = 1f; 
+	public float crouchHeight = 1f;
+
+	private GameManager gameManager;
 
 	private void Awake()
 	{
+		gameManager = GameManager.Instance;
 		character = GetComponent<CharacterController>();
 		originalHeight = character.height; 
 		originalCenter = character.center; 
@@ -77,6 +80,12 @@ public class Player : MonoBehaviour
 		if (other.CompareTag("Obstacle"))
 		{
 			GameManager.Instance.GameOver();
+		}
+
+		if (other.CompareTag("Coin"))
+		{
+			gameManager.score += 1; 
+			Destroy(other.gameObject); 
 		}
 	}
 }

@@ -846,6 +846,7 @@ MonoBehaviour:
   hiscoreText: {fileID: 522072608}
   gameOverText: {fileID: 843005274}
   retryButton: {fileID: 608183669}
+  score: 0
 --- !u!4 &1033365496
 Transform:
   m_ObjectHideFlags: 0
@@ -891,12 +892,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objects:
-  - prefab: {fileID: 6930043916671676212, guid: 4c999e8c89f153b409e57c9f1aba451f, type: 3}
+  - prefab: {fileID: 7492478817654671258, guid: b9094d85021084346889f36eb33337b9, type: 3}
     spawnChance: 0.3
-  - prefab: {fileID: 7980711572887577698, guid: b51012b55b2066c4daef1006fe3f9e6c, type: 3}
+  - prefab: {fileID: 7492478817654671258, guid: b9094d85021084346889f36eb33337b9, type: 3}
     spawnChance: 0.3
-  - prefab: {fileID: 4054898437817050055, guid: e7f6b884282dc9f48bb47b7e986b704b, type: 3}
-    spawnChance: 0.4
+  - prefab: {fileID: 7492478817654671258, guid: b9094d85021084346889f36eb33337b9, type: 3}
+    spawnChance: 0.3
   minSpawnRate: 1
   maxSpawnRate: 2
 --- !u!4 &1082154920
@@ -1639,6 +1640,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1800511636}
   m_CullTransparentMesh: 1
+--- !u!1 &2125495935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2125495937}
+  - component: {fileID: 2125495936}
+  m_Layer: 0
+  m_Name: CoinSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2125495936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125495935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0c0e0115be6c14ea1dab5565e0ee01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - prefab: {fileID: 7492478817654671258, guid: b9094d85021084346889f36eb33337b9, type: 3}
+    spawnChance: 1
+  minSpawnRate: 1
+  maxSpawnRate: 2
+--- !u!4 &2125495937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125495935}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.96, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1647,6 +1697,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1033365496}
   - {fileID: 1082154920}
+  - {fileID: 2125495937}
   - {fileID: 1544659890}
   - {fileID: 1087557763}
   - {fileID: 430813894}
