@@ -103,5 +103,4 @@ public class GameManager : MonoBehaviour
 
 		hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
 	}
-
 }
