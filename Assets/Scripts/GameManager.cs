@@ -52,22 +52,28 @@ public class GameManager : MonoBehaviour
 
 	public void NewGame()
 	{
+		// Destroy all obstacles
 		Obstacle[] obstacles = FindObjectsOfType<Obstacle>();
-
 		foreach (var obstacle in obstacles)
 		{
 			Destroy(obstacle.gameObject);
 		}
 
+		// Reset game variables
 		score = 0f;
 		gameSpeed = initialGameSpeed;
 		enabled = true;
 
+		// Reset player crouch state
+		player.ResetCrouch();
+
+		// Activate player and spawner
 		player.gameObject.SetActive(true);
 		spawner.gameObject.SetActive(true);
 		gameOverText.gameObject.SetActive(false);
 		retryButton.gameObject.SetActive(false);
 
+		// Update high score
 		UpdateHiscore();
 	}
 
@@ -103,4 +109,5 @@ public class GameManager : MonoBehaviour
 
 		hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
 	}
+
 }

@@ -41,6 +41,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Sign
+    uniqueID: 3645819163
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 2528660191
+    locked: 0
+  - name: Coin
+    uniqueID: 81834925
+    locked: 0
+  - name: Obstacle
+    uniqueID: 2657685359
+    locked: 0
+  - name: Player
+    uniqueID: 3866052989
     locked: 0
