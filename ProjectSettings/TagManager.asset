@@ -53,9 +53,9 @@ TagManager:
   - name: Coin
     uniqueID: 81834925
     locked: 0
-  - name: Obstacle
-    uniqueID: 2657685359
-    locked: 0
   - name: Player
     uniqueID: 3866052989
+    locked: 0
+  - name: Obstacle
+    uniqueID: 2657685359
     locked: 0
