@@ -41,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Cloud
+    uniqueID: 3303837591
+    locked: 0
   - name: Sign
     uniqueID: 3645819163
     locked: 0

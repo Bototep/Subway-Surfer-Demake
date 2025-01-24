@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 	public float gameSpeedIncrease = 0.1f;
 	public float gameSpeed { get; private set; }
 
+	[SerializeField] private AudioClip dieClip;
+	[SerializeField] private AudioClip hiScoreClip;
 	[SerializeField] private TextMeshProUGUI scoreText;
 	[SerializeField] private TextMeshProUGUI hiscoreText;
 	[SerializeField] private TextMeshProUGUI gameOverText;
@@ -18,9 +20,12 @@ public class GameManager : MonoBehaviour
 
 	private Player player;
 	private Spawner spawner;
+	private AudioSource audioSource;
 
 	public float score;
 	public float Score => score;
+
+	private bool hiScoreAchieved = false; // Flag to ensure the sound plays only once when reaching a new high score
 
 	private void Awake()
 	{
@@ -46,46 +51,75 @@ public class GameManager : MonoBehaviour
 	{
 		player = FindObjectOfType<Player>();
 		spawner = FindObjectOfType<Spawner>();
+		audioSource = GetComponent<AudioSource>();
 
 		NewGame();
 	}
 
 	public void NewGame()
 	{
-		// Destroy all obstacles
 		Obstacle[] obstacles = FindObjectsOfType<Obstacle>();
 		foreach (var obstacle in obstacles)
 		{
 			Destroy(obstacle.gameObject);
 		}
 
-		// Reset game variables
 		score = 0f;
 		gameSpeed = initialGameSpeed;
 		enabled = true;
 
-		// Reset player crouch state
-		player.ResetCrouch();
+		hiScoreAchieved = false; // Reset the flag when starting a new game
 
-		// Activate player and spawner
-		player.gameObject.SetActive(true);
-		spawner.gameObject.SetActive(true);
-		gameOverText.gameObject.SetActive(false);
-		retryButton.gameObject.SetActive(false);
+		if (player != null)
+		{
+			player.ResetCrouch();
+			player.gameObject.SetActive(true);
+		}
 
-		// Update high score
+		if (spawner != null)
+		{
+			spawner.gameObject.SetActive(true);
+		}
+
+		if (gameOverText != null)
+		{
+			gameOverText.gameObject.SetActive(false);
+		}
+
+		if (retryButton != null)
+		{
+			retryButton.gameObject.SetActive(false);
+		}
+
 		UpdateHiscore();
 	}
 
 	public void GameOver()
 	{
+		DieSFX();
+
 		gameSpeed = 0f;
 		enabled = false;
 
-		player.gameObject.SetActive(false);
-		spawner.gameObject.SetActive(false);
-		gameOverText.gameObject.SetActive(true);
-		retryButton.gameObject.SetActive(true);
+		if (player != null)
+		{
+			player.gameObject.SetActive(false);
+		}
+
+		if (spawner != null)
+		{
+			spawner.gameObject.SetActive(false);
+		}
+
+		if (gameOverText != null)
+		{
+			gameOverText.gameObject.SetActive(true);
+		}
+
+		if (retryButton != null)
+		{
+			retryButton.gameObject.SetActive(true);
+		}
 
 		UpdateHiscore();
 	}
@@ -94,7 +128,13 @@ public class GameManager : MonoBehaviour
 	{
 		gameSpeed += gameSpeedIncrease * Time.deltaTime;
 		score += gameSpeed * Time.deltaTime;
-		scoreText.text = Mathf.FloorToInt(score).ToString("D5");
+
+		if (scoreText != null)
+		{
+			scoreText.text = Mathf.FloorToInt(score).ToString("D5");
+		}
+
+		UpdateHiscore(); // Continuously check for high score updates
 	}
 
 	private void UpdateHiscore()
@@ -103,11 +143,39 @@ public class GameManager : MonoBehaviour
 
 		if (score > hiscore)
 		{
+			if (!hiScoreAchieved) // Play high score sound only once
+			{
+				PlayHiScoreSFX();
+				hiScoreAchieved = true;
+			}
+
 			hiscore = score;
 			PlayerPrefs.SetFloat("hiscore", hiscore);
 		}
 
-		hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
+		if (hiscoreText != null)
+		{
+			hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
+		}
 	}
 
+	private void PlayHiScoreSFX()
+	{
+		if (hiScoreClip != null && audioSource != null)
+		{
+			audioSource.PlayOneShot(hiScoreClip);
+		}
+	}
+
+	public void DieSFX()
+	{
+		audioSource.clip = dieClip;
+		audioSource.Play();
+	}
+
+	public void ResetHiscore()
+	{
+		PlayerPrefs.SetFloat("hiscore", 0); // Set high score to 0
+		UpdateHiscore(); // Update the UI with the reset value
+	}
 }

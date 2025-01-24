@@ -3,7 +3,7 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
 	private float leftEdge;
-	public float speedMultiplier = 0.2f; // Reduce speed by 50%
+	public float speedMultiplier = 0.2f; 
 
 	private void Start()
 	{
