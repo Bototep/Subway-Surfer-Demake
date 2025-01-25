@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [DefaultExecutionOrder(-1)]
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
 
 	[SerializeField] private AudioClip dieClip;
 	[SerializeField] private AudioClip hiScoreClip;
+	[SerializeField] private AudioClip BGMClip;
 	[SerializeField] private TextMeshProUGUI scoreText;
 	[SerializeField] private TextMeshProUGUI hiscoreText;
 	[SerializeField] private TextMeshProUGUI gameOverText;
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
 	public float score;
 	public float Score => score;
 
-	private bool hiScoreAchieved = false; // Flag to ensure the sound plays only once when reaching a new high score
+	private bool hiScoreAchieved = false; 
 
 	private void Awake()
 	{
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
 		spawner = FindObjectOfType<Spawner>();
 		audioSource = GetComponent<AudioSource>();
 
+		OnGameStartSFX();
 		NewGame();
 	}
 
@@ -68,7 +71,7 @@ public class GameManager : MonoBehaviour
 		gameSpeed = initialGameSpeed;
 		enabled = true;
 
-		hiScoreAchieved = false; // Reset the flag when starting a new game
+		hiScoreAchieved = false; 
 
 		if (player != null)
 		{
@@ -121,20 +124,25 @@ public class GameManager : MonoBehaviour
 			retryButton.gameObject.SetActive(true);
 		}
 
+		if (audioSource != null && audioSource.clip == BGMClip)
+		{
+			audioSource.Stop();
+		}
+
 		UpdateHiscore();
 	}
 
 	private void Update()
 	{
 		gameSpeed += gameSpeedIncrease * Time.deltaTime;
-		score += gameSpeed * Time.deltaTime;
+		//score += gameSpeed * Time.deltaTime;
 
 		if (scoreText != null)
 		{
 			scoreText.text = Mathf.FloorToInt(score).ToString("D5");
 		}
 
-		UpdateHiscore(); // Continuously check for high score updates
+		UpdateHiscore(); 
 	}
 
 	private void UpdateHiscore()
@@ -143,7 +151,7 @@ public class GameManager : MonoBehaviour
 
 		if (score > hiscore)
 		{
-			if (!hiScoreAchieved) // Play high score sound only once
+			if (!hiScoreAchieved) 
 			{
 				PlayHiScoreSFX();
 				hiScoreAchieved = true;
@@ -175,7 +183,21 @@ public class GameManager : MonoBehaviour
 
 	public void ResetHiscore()
 	{
-		PlayerPrefs.SetFloat("hiscore", 0); // Set high score to 0
-		UpdateHiscore(); // Update the UI with the reset value
+		PlayerPrefs.SetFloat("hiscore", 0); 
+		UpdateHiscore(); 
+	}
+
+	public void OnRetryButtonPressed()
+	{
+		SceneManager.LoadScene(0);
+	}
+
+	public void OnGameStartSFX()
+	{
+		if (BGMClip != null && audioSource != null) 
+		{
+			audioSource.clip = BGMClip;
+			audioSource.Play();
+		}
 	}
 }

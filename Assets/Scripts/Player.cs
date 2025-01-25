@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
 
 			if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetMouseButton(0))
 			{
-				PlaySound(jumpClip); // Play jump sound
+				PlaySound(jumpClip);
 				direction = Vector3.up * jumpForce;
 			}
 		}
@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
 
 		if (other.CompareTag("Coin"))
 		{
-			PlaySound(coinClip); // Play coin sound
+			PlaySound(coinClip); 
 			gameManager.score += 1;
 			Destroy(other.gameObject);
 		}
@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
 	{
 		if (clip != null)
 		{
-			audioSource.PlayOneShot(clip); // Use PlayOneShot for overlapping sounds
+			audioSource.PlayOneShot(clip); 
 		}
 	}
 }
